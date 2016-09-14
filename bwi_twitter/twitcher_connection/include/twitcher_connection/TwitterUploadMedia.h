@@ -22,7 +22,7 @@
 #ifndef TWITTERPOSTMEDIA_H
 #define TWITTERPOSTMEDIA_H
 
-class TwitterUploadMedia :  TwitterApiCall
+class TwitterUploadMedia : public TwitterApiCall
 {
 public:
     TwitterUploadMedia(std::string base64data);

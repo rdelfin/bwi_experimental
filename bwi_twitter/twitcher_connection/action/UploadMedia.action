@@ -1,0 +1,9 @@
+#goal
+sensor_msgs/Image media
+---
+#result
+bool success
+int64 media_id
+---
+#feedback
+int32 progress

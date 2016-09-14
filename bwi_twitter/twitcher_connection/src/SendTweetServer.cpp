@@ -9,7 +9,7 @@ SendTweetServer::SendTweetServer(std::string name, TwitterRequestHandler handler
     as_(nh_, name, boost::bind(&SendTweetServer::executeCB, this, _1), false),
     action_name_(name), handler(handler)
 {
-    ROS_INFO("Action server starting");
+    ROS_INFO("Send Tweet action server starting");
     as_.start();
 }
 

@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   actionlib
   actionlib_msgs
+  sensor_msgs
 )
 
 find_package(CURL REQUIRED)
@@ -69,6 +70,7 @@ add_service_files(
    action
    FILES
    SendTweet.action
+   UploadMedia.action
  )
 
 ## Generate added messages and services with any dependencies listed here
@@ -76,6 +78,7 @@ add_service_files(
    DEPENDENCIES
    std_msgs
    actionlib_msgs
+   sensor_msgs
  )
 
 ################################################
@@ -150,7 +153,8 @@ add_executable(twitcher_connection_node src/twitcher_connection_node.cpp
                                         src/SendTweetServer.cpp
                                         src/TwitterMentionsMonitor.cpp
                                         src/TwitterShowUser.cpp
-                                        src/TwitterUploadMedia.cpp)
+                                        src/TwitterUploadMedia.cpp
+                                        src/MediaUploadServer.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
