@@ -23,10 +23,12 @@
 #include "twitcher_connection/TwitterMentions.h"
 #include "twitcher_connection/TwitterUpdateStatus.h"
 #include "twitcher_connection/SendTweetServer.h"
+#include "twitcher_connection/MediaUploadServer.h"
 #include "twitcher_connection/TwitterMentionsMonitor.h"
 #include "twitcher_connection/TwitterShowUser.h"
 
 #include <twitcher_connection/SendTweetAction.h>
+#include <twitcher_connection/UploadMediaAction.h>
 #include <twitcher_connection/handle_from_id.h>
 
 #include <actionlib/client/simple_action_client.h>
@@ -50,8 +52,10 @@ int main(int argc, char* argv[])
     
     TwitterMentionsMonitor monitor(nh, *handler);
     
-    /* Initialize a SendTweet Action server */
+    /* Initialize the Action servers */
     SendTweetServer sendTweet("send_tweet", *handler);
+    MediaUploadServer mediaUpload("upload_media", *handler);
+    
     
     idConverter = nh.advertiseService("twitter/handle_from_id", idConverterCallback);
     
