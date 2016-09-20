@@ -20,14 +20,20 @@ void SendTweetServer::executeCB(const twitcher_connection::SendTweetGoalConstPtr
     ros::Rate r(1);
     bool success = true;
 
+    if(goal->mediaids.size() > 4) {
+        ROS_WARN("Status contains more than 4 media ID's! Up to 4 are allowed");
+    }
+    
     feedback_.progress=0;
-
-    ROS_INFO("Sending tweet: %s", goal->message.c_str());
-
+    as_.publishFeedback(feedback_);
+    
+    ROS_INFO("Sending tweet: \"%s\"", goal->message.c_str());
+    
     feedback_.progress+=10;
+    as_.publishFeedback(feedback_);
 
     TwitterApiCall* api = 
-        new TwitterUpdateStatus(goal->message, -1, false, false);
+        new TwitterUpdateStatus(goal->message, -1, false, false, goal->mediaids);
 
     std::string resultString = handler.makeRequest(api);
 

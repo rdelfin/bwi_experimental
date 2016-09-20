@@ -22,11 +22,13 @@
 TwitterUpdateStatus::TwitterUpdateStatus(std::string status,
                                          int in_reply_to_status_id,
                                          bool possibly_sensitive,
-                                         bool trim_user)
+                                         bool trim_user,
+                                         std::vector<long> mediaids)
 
     : TwitterApiCall(), status(status),
       in_reply_to_status_id(in_reply_to_status_id),
-        possibly_sensitive(possibly_sensitive), trim_user(trim_user)
+        possibly_sensitive(possibly_sensitive), trim_user(trim_user),
+        mediaids(mediaids)
 {
     path = "statuses/update.json";
     
@@ -41,6 +43,17 @@ TwitterUpdateStatus::TwitterUpdateStatus(std::string status,
     
     queryVals["trim_user"] = (trim_user ? "true" : "false");
     queryVals["possibly_sensitive"] = (possibly_sensitive ? "true" : "false");
+    
+    if(mediaids.size() > 0) {
+        std::stringstream ss;
+        for(int i = 0; i < mediaids.size(); i++) {
+            ss << mediaids[i];
+            if(i < mediaids.size() - 1)
+                ss << ",";
+        }
+        
+        queryVals["media_ids"] = ss.str();
+    }
     
     callUrl << url << path;
     

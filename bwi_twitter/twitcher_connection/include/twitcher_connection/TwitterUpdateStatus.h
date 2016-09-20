@@ -21,12 +21,14 @@
 #include "twitcher_connection/TwitterApiCall.h"
 
 #include <string>
+#include <vector>
 
 class TwitterUpdateStatus : public TwitterApiCall
 {
 public:
     TwitterUpdateStatus(std::string status, int in_reply_to_status_id, 
-                        bool possibly_sensitive, bool trim_user);
+                        bool possibly_sensitive, bool trim_user,
+                        std::vector<long> mediaids);
     
     virtual const curlpp::Easy& request();
     
@@ -37,6 +39,7 @@ private:
     int in_reply_to_status_id;
     bool possibly_sensitive;
     bool trim_user;
+    std::vector<long> mediaids;
     
     
 };
