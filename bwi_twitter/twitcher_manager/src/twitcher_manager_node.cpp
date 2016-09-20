@@ -212,6 +212,7 @@ void sendResponse(const std::string& message, const std::string& user_id) {
     
     twitcher_connection::SendTweetGoal goal;
     goal.message = "@" + res.handle + " " + message;
+    goal.mediaids = std::vector<long>();
     
     ROS_INFO_STREAM("Waiting for send result...");
     sendTweetClient->sendGoal(goal);
