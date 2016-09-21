@@ -53,7 +53,7 @@ void MediaUploadServer::executeCB(const twitcher_connection::UploadMediaGoalCons
     
 
     TwitterApiCall* api = 
-        new TwitterUploadMedia(base64_encode(&goal->media.data[0], goal->media.data.size()));
+        new TwitterUploadMedia(base64_encode(toJpgByteArray(&goal->media.data[0]), goal->media.data.size()));
     
     std::string resultString = handler.makeRequest(api);
     
@@ -68,7 +68,7 @@ void MediaUploadServer::executeCB(const twitcher_connection::UploadMediaGoalCons
 }
 
 const std::vector<uint8_t> MediaUploadServer::toJpgByteArray(const sensor_msgs::ImageConstPtr& imgMsg) {
-    std::vector<uint8_t> result; 
+    std::vector<uint8_t> result;
     cv_bridge::CvImagePtr cvImage = cv_bridge::toCvCopy(imgMsg);
     cv::imencode("jpg", cvImage->image, result);
     return result;
