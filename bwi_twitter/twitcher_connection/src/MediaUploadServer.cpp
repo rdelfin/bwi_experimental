@@ -20,6 +20,13 @@
 #include "twitcher_connection/base64.h"
 #include "json/json.hpp"
 
+#include <vector>
+
+#include <cv_bridge/cv_bridge.h>
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <sensor_msgs/Image.h>
+
 using json = nlohmann::json;
 
 MediaUploadServer::MediaUploadServer(std::string name, TwitterRequestHandler handler)
@@ -40,6 +47,10 @@ void MediaUploadServer::executeCB(const twitcher_connection::UploadMediaGoalCons
     ROS_INFO("Uploading image of size: %d,%d", goal->media.width, goal->media.height);
 
     feedback_.progress+=10;
+    
+    ROS_INFO("Converting image to JPG format");
+    
+    
 
     TwitterApiCall* api = 
         new TwitterUploadMedia(base64_encode(&goal->media.data[0], goal->media.data.size()));
@@ -54,4 +65,11 @@ void MediaUploadServer::executeCB(const twitcher_connection::UploadMediaGoalCons
     ROS_INFO("Tweet sent");
     as_.setSucceeded(result_);
 
+}
+
+const std::vector<uint8_t> MediaUploadServer::toJpgByteArray(const sensor_msgs::ImageConstPtr& imgMsg) {
+    std::vector<uint8_t> result; 
+    cv_bridge::CvImagePtr cvImage = cv_bridge::toCvCopy(imgMsg);
+    cv::imencode("jpg", cvImage->image, result);
+    return result;
 }

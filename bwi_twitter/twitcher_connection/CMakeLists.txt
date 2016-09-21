@@ -18,10 +18,11 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib
   actionlib_msgs
   sensor_msgs
+  cv_bridge
 )
 
 find_package(CURL REQUIRED)
-
+find_package(OpenCV REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -114,7 +115,7 @@ catkin_package(
   INCLUDE_DIRS include
 #  LIBRARIES twitcher_connection
   CATKIN_DEPENDS roscpp rospy std_msgs
-  DEPENDS system_lib curl curlpp
+  DEPENDS system_lib curl curlpp OpenCV2
 )
 
 ###########
@@ -128,6 +129,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${CURL_INCLUDE_DIR}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -164,6 +166,7 @@ add_dependencies(twitcher_connection_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${
 target_link_libraries(twitcher_connection_node
   ${catkin_LIBRARIES}
   ${CURL_LIBRARIES}
+  ${OpenCV_LIBS}
   curlpp
 )
 

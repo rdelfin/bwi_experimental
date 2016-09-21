@@ -17,8 +17,9 @@
 
 #include <ros/ros.h>
 #include <string>
+#include <vector>
 
-
+#include <sensor_msgs/Image.h>
 
 #include <actionlib/server/simple_action_server.h>
 #include "twitcher_connection/UploadMediaAction.h"
@@ -33,6 +34,8 @@ public:
     MediaUploadServer(std::string name, TwitterRequestHandler handler);
   
     void executeCB(const twitcher_connection::UploadMediaGoalConstPtr &goal);
+    
+    const std::vector<uint8_t> toJpgByteArray(const sensor_msgs::ImageConstPtr& img);
 
     ~MediaUploadServer(void) { }
   
