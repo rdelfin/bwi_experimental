@@ -52,8 +52,10 @@ void MediaUploadServer::executeCB(const twitcher_connection::UploadMediaGoalCons
     
     
 
+    std::vector<uint8_t> jpegData = toJpgByteArray(ImageConstPtr(goal->media));
+    
     TwitterApiCall* api = 
-        new TwitterUploadMedia(base64_encode(toJpgByteArray(&goal->media.data[0]), goal->media.data.size()));
+        new TwitterUploadMedia(base64_encode(&jpegData[0], jpegData.size()));
     
     std::string resultString = handler.makeRequest(api);
     
